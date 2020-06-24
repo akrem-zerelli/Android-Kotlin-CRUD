@@ -36,7 +36,7 @@ class WordsManager (context: Context){
                 var taille = cursor.getInt(cursor.getColumnIndex("taille"))
                 var genre = cursor.getString(cursor.getColumnIndex("genre"))
                 var type = cursor.getString(cursor.getColumnIndex("type"))
-                val mot=Mot(leMot,taille,genre,type)
+                val mot=Mot(leMot,taille,type,genre)
                 wordsList.add(mot)
 
             }while (cursor.moveToNext())
@@ -46,6 +46,20 @@ class WordsManager (context: Context){
         val selectQuery= "SELECT * FROM " + MotDbHelper.THE_TABLE
         var cursor: Cursor?
                 cursor = db.rawQuery(selectQuery,null)
+        return cursorToWord(cursor)
+    }
+    fun getComposeNom(genre: String): List<Mot>{
+        val selectQuery= "SELECT * FROM " + MotDbHelper.THE_TABLE +" WHERE "+ MotDbHelper.COL_GENRE +"= '"+genre+"' and " +
+                MotDbHelper.COL_TYPE + "= 'nom' ORDER BY RANDOM() LIMIT 1"
+        var cursor: Cursor?
+        cursor = db.rawQuery(selectQuery,null)
+        return cursorToWord(cursor)
+    }
+    fun getComposeAdj(genre: String): List<Mot>{
+        val selectQuery= "SELECT * FROM " + MotDbHelper.THE_TABLE +" WHERE "+ MotDbHelper.COL_GENRE +"= '"+genre+"' and " +
+                MotDbHelper.COL_TYPE + "= 'adj' ORDER BY RANDOM() LIMIT 1"
+        var cursor: Cursor?
+        cursor = db.rawQuery(selectQuery,null)
         return cursorToWord(cursor)
     }
     fun deleteWord(mot : String){

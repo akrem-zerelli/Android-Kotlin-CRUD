@@ -30,6 +30,10 @@ class MainActivity : AppCompatActivity() {
             intent = Intent(applicationContext, AddWordActivity::class.java)
             startActivityForResult(intent, 1)
         }
+        btncompose.setOnClickListener {
+            intent = Intent(applicationContext, ComposeActivity::class.java)
+            startActivityForResult(intent, 3)
+        }
     }
     override fun onActivityResult(requestCode:Int, resultCode:Int, data:Intent?){
         super.onActivityResult(requestCode, resultCode, data)
@@ -53,6 +57,13 @@ class MainActivity : AppCompatActivity() {
                     else -> {
                         Toast.makeText(this, "Updated", Toast.LENGTH_LONG).show()
                         list=this.refreshList()
+                    }
+
+                }
+            3 ->
+                when(resultCode){
+                    Activity.RESULT_CANCELED -> {
+                        Toast.makeText(this, "no Result founded", Toast.LENGTH_LONG).show()
                     }
 
                 }
